@@ -13,7 +13,7 @@ class App:
         self.window.geometry("1000x1000")
         self.window.configure(background='grey')
         self.text = ""
-        self.imageFile = "flshr_images/flshr.jpeg"
+        self.imageFile = "data/flshr_images/flshr.jpeg"
         
         windowX = 700
         windowY = 700
@@ -21,7 +21,7 @@ class App:
         path = getattr(sys, '_MEIPASS', os.getcwd())
         os.chdir(path)
         
-        with open('dicts/dict.csv', mode='r') as infile:
+        with open('data/dicts/dict.csv', mode='r') as infile:
             reader = csv.reader(infile, delimiter='|', quotechar='"')
             tupleList = {(rows[0], rows[1]) for rows in reader}
         
@@ -39,15 +39,15 @@ class App:
             
             if (entryText == self.text):
                 self.text, self.imageFile = random.sample(tupleList, 1)[0]
-                randImg = ImageTk.PhotoImage(Image.open(self.imageFile).resize((windowY, windowX), Image.ANTIALIAS))
+                randImg = ImageTk.PhotoImage(Image.open("data/images/" + self.imageFile).resize((windowY, windowX), Image.ANTIALIAS))
                 panel.configure(image = randImg)
                 panel.image = randImg
             elif (entryText == ""):
-                randImg = ImageTk.PhotoImage(Image.open(self.imageFile).resize((windowY, windowX), Image.ANTIALIAS))
+                randImg = ImageTk.PhotoImage(Image.open("data/images/" + self.imageFile).resize((windowY, windowX), Image.ANTIALIAS))
                 panel.configure(image = randImg)
                 panel.image = randImg
             else:
-                failImg = ImageTk.PhotoImage(Image.open("flshr_images/fail.jpg").resize((windowY, windowX), Image.ANTIALIAS))
+                failImg = ImageTk.PhotoImage(Image.open("data/flshr_images/fail.jpg").resize((windowY, windowX), Image.ANTIALIAS))
                 panel.configure(image = failImg)
                 panel.image = failImg
             
