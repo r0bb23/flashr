@@ -8,38 +8,40 @@ from Tkinter import *
 from PIL import Image, ImageTk
 
 class App:
-    def __init__(self, text = ""):
+    def __init__(self):
         self.window = Tk()
         self.window.title("Flashr")
         self.window.geometry("1000x1000")
         self.window.configure(background='grey')
+        self.text = ""
+        self.imageFile = "flashr.jpeg"
         
-        windowX = 1000
-        windowY = 1000
+        windowX = 700
+        windowY = 700
         
         with open('dict.csv', mode='r') as infile:
             reader = csv.reader(infile, delimiter='|', quotechar='"')
             tupleList = {(rows[0], rows[1]) for rows in reader}
         
-        startImg = ImageTk.PhotoImage(Image.open("flashr.jpeg").resize((windowY, windowX), Image.ANTIALIAS))
+        startImg = ImageTk.PhotoImage(Image.open(self.imageFile).resize((windowY, windowX), Image.ANTIALIAS))
         panel = Label(self.window, image=startImg)
         panel.pack(side="top", fill="both", expand="yes")
+        panel.configure(image = startImg)
+        panel.image = startImg
         
         entryObj = Entry(self.window)
         entryObj.pack()
         
         def callback(e):
-            global text
-            global imageFile
-            entryText = entryObj.get()
+            entryText = entryObj.get().lower().strip()
             
-            if (entryText == text):
-                text, imageFile = random.sample(tupleList, 1)[0]
-                randImg = ImageTk.PhotoImage(Image.open(imageFile).resize((windowY, windowX), Image.ANTIALIAS))
+            if (entryText == self.text):
+                self.text, self.imageFile = random.sample(tupleList, 1)[0]
+                randImg = ImageTk.PhotoImage(Image.open(self.imageFile).resize((windowY, windowX), Image.ANTIALIAS))
                 panel.configure(image = randImg)
                 panel.image = randImg
             elif (entryText == ""):
-                randImg = ImageTk.PhotoImage(Image.open(imageFile).resize((windowY, windowX), Image.ANTIALIAS))
+                randImg = ImageTk.PhotoImage(Image.open(self.imageFile).resize((windowY, windowX), Image.ANTIALIAS))
                 panel.configure(image = randImg)
                 panel.image = randImg
             else:
