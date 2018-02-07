@@ -2,14 +2,13 @@
 
 import csv
 import random
-import time
 
-from Tkinter import *
 from PIL import Image, ImageTk
+import Tkinter as tk
 
 class App:
     def __init__(self):
-        self.window = Tk()
+        self.window = tk.Tk()
         self.window.title("Flshr")
         self.window.geometry("1000x1000")
         self.window.configure(background='grey')
@@ -19,17 +18,20 @@ class App:
         windowX = 700
         windowY = 700
         
+        path = getattr(sys, '_MEIPASS', os.getcwd())
+        os.chdir(path)
+        
         with open('dicts/dict.csv', mode='r') as infile:
             reader = csv.reader(infile, delimiter='|', quotechar='"')
             tupleList = {(rows[0], rows[1]) for rows in reader}
         
         startImg = ImageTk.PhotoImage(Image.open(self.imageFile).resize((windowY, windowX), Image.ANTIALIAS))
-        panel = Label(self.window, image=startImg)
+        panel = tk.Label(self.window, image=startImg)
         panel.pack(side="top", fill="both", expand="yes")
         panel.configure(image = startImg)
         panel.image = startImg
         
-        entryObj = Entry(self.window)
+        entryObj = tk.Entry(self.window)
         entryObj.pack()
         
         def callback(e):
@@ -49,7 +51,7 @@ class App:
                 panel.configure(image = failImg)
                 panel.image = failImg
             
-            entryObj.delete(0, END)
+            entryObj.delete(0, tk.END)
         
         self.window.bind("<Return>", callback)
 
