@@ -10,16 +10,16 @@ from PIL import Image, ImageTk
 class App:
     def __init__(self):
         self.window = Tk()
-        self.window.title("Flashr")
+        self.window.title("Flshr")
         self.window.geometry("1000x1000")
         self.window.configure(background='grey')
         self.text = ""
-        self.imageFile = "flashr.jpeg"
+        self.imageFile = "flshr_images/flshr.jpeg"
         
         windowX = 700
         windowY = 700
         
-        with open('dict.csv', mode='r') as infile:
+        with open('dicts/dict.csv', mode='r') as infile:
             reader = csv.reader(infile, delimiter='|', quotechar='"')
             tupleList = {(rows[0], rows[1]) for rows in reader}
         
@@ -45,7 +45,7 @@ class App:
                 panel.configure(image = randImg)
                 panel.image = randImg
             else:
-                failImg = ImageTk.PhotoImage(Image.open("fail.jpg").resize((windowY, windowX), Image.ANTIALIAS))
+                failImg = ImageTk.PhotoImage(Image.open("flshr_images/fail.jpg").resize((windowY, windowX), Image.ANTIALIAS))
                 panel.configure(image = failImg)
                 panel.image = failImg
             
